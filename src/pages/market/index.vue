@@ -1,8 +1,6 @@
 <template>
   <div>
     <el-container>
-      <!-- <el-aside width="140px">
-      </el-aside> -->
       <v-menu :menuList="menuList"></v-menu>
       <el-main id="wxloding">
         <keep-alive>
@@ -21,19 +19,39 @@ export default {
     return{
       menuList:[
         {
-          path: '/commodity/commodityManage',
+          path: '/market/listing',
           icon: 'el-icon-location',
-          title: '商品管理',
+          title: 'Listing',
         },
         {
-          path: '/commodity/brandManage',
+          path: '/market/evaluation',
           icon: 'el-icon-location',
-          title: '品牌管理',
+          title: '售后评价',
         },
         {
-          path: '/commodity/sortManage',
+          path: '/market/orderList',
           icon: 'el-icon-location',
-          title: '分类管理',
+          title: '订单列表',
+        },
+        {
+          path: '/market/orderShip',
+          icon: 'el-icon-location',
+          title: '订单发货',
+        },
+        {
+          path: '/market/returnOrder',
+          icon: 'el-icon-location',
+          title: '退货订单',
+        },
+        {
+          path: '/market/delOrder',
+          icon: 'el-icon-location',
+          title: '移除订单',
+        },
+        {
+          path: '/market/clientList',
+          icon: 'el-icon-location',
+          title: '客户列表',
         },
       ]
     }

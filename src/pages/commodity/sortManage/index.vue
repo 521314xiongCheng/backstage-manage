@@ -14,25 +14,22 @@
         <el-table-column prop="createTime" label="创建时间" align="center" show-overflow-tooltip min-width="100"></el-table-column>
         <el-table-column label="操作" fixed="right" align="center" show-overflow-tooltip min-width="120">
           <template slot-scope="{row, $index}">
-            <el-popover placement="bottom" popper-class="table_popper" trigger="hover">
-              <ul>
-                <li>
-                  <el-button type="text" size="mini" @click="edit(row, $index)">编辑</el-button>
-                </li>
-                <li>
-                  <el-button type="text" size="mini" @click="edit(row, $index)">删除</el-button>
-                </li>
-              </ul>
-              <el-button type="text" slot="reference">操作</el-button>
-            </el-popover>
+            <el-dropdown split-button type="primary" size="mini">
+              编辑
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item @click="edit(row,$index)">删除</el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
           </template>
         </el-table-column>
     </el-table>
     <div class="page-box">
       <el-pagination
         @current-change="handleCurrentChange"
+        @size-change="handleSizeChange"
         :page-size="pageSize"
-        layout="total, prev, pager, next, jumper"
+        :page-sizes="[20, 50, 100, 200]"
+        layout="total, sizes, prev, pager, next, jumper"
         :total="totalCount"
       ></el-pagination>
     </div>
@@ -147,6 +144,9 @@ export default {
     },
     handleCurrentChange(v){
       this.pageNo=v
+    },
+    handleSizeChange(v){
+      this.pageSize = v
     }
   }
 }

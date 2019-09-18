@@ -3,7 +3,9 @@
     <el-row class="nav-row" style="width:100%;">
       <el-col :span="20">
         <el-menu 
-          :default-active="$route.path.includes($route.path.split('/')[0])?`/${$route.path.split('/')[0]}`:$route.path" 
+          :default-active="
+            $route.path.includes($route.path.split('/')[0])?`/${$route.path.split('/')[0]}`:$route.path
+          " 
           router 
           text-color="#bababb" 
           background-color="#262626" 
@@ -81,7 +83,7 @@ export default {
           path:'/commodity'
         },{
           name:'销售',
-          path:'/2'
+          path:'/market'
         },{
           name:'物流',
           path:'/5'

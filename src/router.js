@@ -34,6 +34,21 @@ const router = new Router({
           path: 'user',
           component: ()=>import('@/pages/setting/account/user/index.vue')
         },
+        {
+          name: 'setting-parameterSetting-exchangeRate-index',
+          path: 'exchangeRate',
+          component: ()=>import('@/pages/setting/parameterSetting/exchangeRate/index.vue')
+        },
+        {
+          name: 'setting-storeAutho-storeAutho-index',
+          path: 'storeAutho',
+          component: ()=>import('@/pages/setting/storeAutho/storeAutho/index.vue')
+        },
+        {
+          name: 'setting-clent-report-index',
+          path: 'report',
+          component: ()=>import('@/pages/setting/clent/report/index.vue')
+        },
       ]
     },
     {
@@ -56,6 +71,49 @@ const router = new Router({
           name: 'commodity-sortManage-index',
           path: 'sortManage',
           component: ()=>import('@/pages/commodity/sortManage/index.vue')
+        },
+      ]
+    },
+    {
+      name: 'market-index',
+      path: '/market',
+      redirect:'/market/listing',
+      component: ()=>import('@/pages/market/index.vue'),
+      children:[
+        {
+          name: 'market-listing-index',
+          path: 'listing',
+          component: ()=>import('@/pages/market/listing/index.vue')
+        },
+        {
+          name: 'market-evaluation-index',
+          path: 'evaluation',
+          component: ()=>import('@/pages/market/evaluation/index.vue')
+        },
+        {
+          name: 'market-orderList-index',
+          path: 'orderList',
+          component: ()=>import('@/pages/market/orderList/index.vue')
+        },
+        {
+          name: 'market-orderShip-index',
+          path: 'orderShip',
+          component: ()=>import('@/pages/market/orderShip/index.vue')
+        },
+        {
+          name: 'market-returnOrder-index',
+          path: 'returnOrder',
+          component: ()=>import('@/pages/market/returnOrder/index.vue')
+        },
+        {
+          name: 'market-delOrder-index',
+          path: 'delOrder',
+          component: ()=>import('@/pages/market/delOrder/index.vue')
+        },
+        {
+          name: 'market-clientList-index',
+          path: 'clientList',
+          component: ()=>import('@/pages/market/clientList/index.vue')
         },
       ]
     },

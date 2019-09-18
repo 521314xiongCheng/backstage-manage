@@ -62,36 +62,27 @@
                 <el-table-column prop="telephone" label="手机号" align="center" show-overflow-tooltip min-width="100"></el-table-column>
                 <el-table-column label="操作" fixed="right" align="center" show-overflow-tooltip min-width="120">
                   <template slot-scope="{row, $index}">
-                    <el-button size="mini">移除</el-button>
+                    <el-button size="mini" @click="del(row,$index)">移除</el-button>
                   </template>
                 </el-table-column>
             </el-table>
-            <!-- <div class="page-box">
-              <el-pagination
-                @current-change="handleCurrentChange"
-                :page-size="pageSize"
-                layout="total, prev, pager, next, jumper"
-                :total="totalCount"
-              ></el-pagination>
-            </div> -->
           </el-tab-pane>
           <el-tab-pane label="功能权限" name="second">
             <p style="font-size:12px;">勾选控制将决定页面和按钮的显示与隐藏</p>
             <el-table 
               :data="funcWrapTable"
+              height="320"
               size="mini"
               border
               stripe>
                 <el-table-column label="板块" width="120">
                   <template>
-                    <el-tabs tab-position="left">
-                      <el-tab-pane label="首页"></el-tab-pane>
-                      <el-tab-pane label="商品"></el-tab-pane>
-                      <el-tab-pane label="销售"></el-tab-pane>
-                      <el-tab-pane label="物流"></el-tab-pane>
-                      <el-tab-pane label="工具"></el-tab-pane>
-                      <el-tab-pane label="设置"></el-tab-pane>
-                    </el-tabs>
+                    <div>首页</div>
+                    <div>商品</div>
+                    <div>销售</div>
+                    <div>物流</div>
+                    <div>工具</div>
+                    <div>设置</div>
                   </template>
                 </el-table-column>
                 <el-table-column>
@@ -121,46 +112,6 @@
                   </template>
                 </el-table-column>
             </el-table>
-            <!-- <el-row>
-              <el-col :span="6">
-                <header>板块</header>
-                <el-tabs tab-position="left" style="height: 200px;">
-                  <el-tab-pane label="首页"></el-tab-pane>
-                  <el-tab-pane label="商品"></el-tab-pane>
-                  <el-tab-pane label="销售"></el-tab-pane>
-                  <el-tab-pane label="物流"></el-tab-pane>
-                  <el-tab-pane label="工具"></el-tab-pane>
-                  <el-tab-pane label="设置"></el-tab-pane>
-                </el-tabs>
-              </el-col>
-              <el-col :span="18">
-                <header>
-                  <el-checkbox v-model="checked">全选</el-checkbox>
-                </header>
-                <div>
-                  <el-table 
-                    :data="funcPermissionTable"
-                    size="mini"
-                    border
-                    :show-header="false"
-                    highlight-current-row
-                    stripe>
-                      <el-table-column width="120">
-                        <template slot-scope="{row}">
-                          <el-checkbox :indeterminate="row.isIndeterminate" v-model="row.checkAll" @change="handleCheckAllChange($event,row)">全选</el-checkbox>
-                        </template>
-                      </el-table-column>
-                      <el-table-column>
-                        <template slot-scope="{row}">
-                          <el-checkbox-group v-model="row.checkedCities" @change="handleCheckedCitiesChange($event,row)">
-                            <el-checkbox v-for="city in row.cities" :label="city" :key="city">{{city}}</el-checkbox>
-                          </el-checkbox-group>
-                        </template>
-                      </el-table-column>
-                  </el-table>
-                </div>
-              </el-col>
-            </el-row> -->
           </el-tab-pane>
           <el-tab-pane label="数据权限" name="third">
             <el-table 
@@ -170,7 +121,14 @@
               border
               highlight-current-row
               stripe>
-                <el-table-column prop="name" label="字段" align="center"></el-table-column>
+                <el-table-column label="字段" align="center">
+                  <template slot-scope="{row}">
+                    {{row.name}}
+                    <el-tooltip class="item" effect="dark" :content="row.title" placement="top">
+                      <span class="el-icon-question"></span>
+                    </el-tooltip>
+                  </template>
+                </el-table-column>
                 <el-table-column label="可见" align="center">
                   <template slot-scope="{row}">
                     <el-radio v-model="row.visible" :label="true"><span></span></el-radio>
@@ -272,9 +230,14 @@ export default {
       datapermissionTable:[
         {
           name:'采购成本',
-          title:'',
+          title:'dsjdhsjkd',
           visible:true,
-        }
+        },
+        {
+          name:'库存单价、库存货值',
+          title:'dsdhkshdks',
+          visible:true,
+        },
       ],
       checked:false,
       funcWrapTable:[

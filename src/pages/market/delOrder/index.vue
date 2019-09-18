@@ -1,19 +1,12 @@
 <template>
   <div class="user-page">
     <el-form :inline="true" :model="searchForm" ref="searchForm" size="mini">
-      <el-form-item>
-        <el-radio-group v-model="searchForm.type">
-          <el-radio-button label="top">全部</el-radio-button>
-          <el-radio-button label="right">普通商品</el-radio-button>
-          <el-radio-button label="bottom">组合商品</el-radio-button>
-        </el-radio-group>
-      </el-form-item>
-      <el-form-item>
+      <el-form-item style="width:120px;">
         <el-select
           v-model="searchForm.types"
           multiple
           collapse-tags
-          placeholder="全部分类">
+          placeholder="搜索负责人">
           <el-option
             v-for="item in options"
             :key="item.value"
@@ -22,12 +15,12 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item>
+      <el-form-item style="width:120px;">
         <el-select
           v-model="searchForm.types"
           multiple
           collapse-tags
-          placeholder="全部品牌">
+          placeholder="全部站点">
           <el-option
             v-for="item in options"
             :key="item.value"
@@ -36,38 +29,60 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item>
-        <el-select v-model="searchForm.type" placeholder="全部状态" @change="search" style="width:120px">
-          <el-option label="在售" value="inStock"></el-option>
-          <el-option label="停售" value="Discontinued"></el-option>
+      <el-form-item style="width:100px;">
+        <el-select
+          v-model="searchForm.types"
+          multiple
+          collapse-tags
+          placeholder="全部店铺">
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item style="width:100px;">
+        <el-select v-model="searchForm.type" placeholder="全部分类" @change="search">
+          <el-option label="FBM订单" value="1"></el-option>
+          <el-option label="FBA订单" value="2"></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item style="width:100px;">
+        <el-select v-model="searchForm.type" placeholder="全部品牌" @change="search">
+          <el-option label="已配对" value="1"></el-option>
+          <el-option label="未配对" value="2"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-select v-model="searchForm.type" placeholder="请选择" @change="search" style="width:100px">
-          <el-option label="品名" value=""></el-option>
-        </el-select>
-        <el-input v-model="searchForm.userName" style="width:180px"></el-input>
+        <el-date-picker
+          style="width:220px"
+          v-model="searchForm.time"
+          type="daterange"
+          range-separator="-"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期">
+        </el-date-picker>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="search">搜索</el-button>
+        <el-select v-model="searchForm.type" placeholder="请选择" @change="search" style="width:80px">
+          <el-option label="订单号" value="MSKU"></el-option>
+        </el-select>
+        <el-input placeholder="请输入内容" style="width:120px;"></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary">搜索</el-button>
       </el-form-item>
     </el-form>
     <div class="btn-box">
       <div>
-        <el-button size="mini" type="primary">添加商品</el-button>
-        <el-button size="mini" type="primary">添加组合商品</el-button>
-        <el-button size="mini" type="primary">导入商品</el-button>
-        <el-button size="mini" type="primary">导入组合商品</el-button>
-        <el-button size="mini" type="primary">导入更新商品</el-button>
-        <el-button size="mini" type="primary">批量编辑</el-button>
-        <el-button size="mini" type="primary">批量删除</el-button>
-        <el-button size="mini" type="primary">打印标签</el-button>
+        
       </div>
       <div class="btn-box-right">
+        <el-button size="mini" type="text" style="color:#ccc;"><i class="el-icon-info"></i></el-button>
         <el-button size="mini" type="text" style="color:#ccc;"><i class="el-icon-setting"></i></el-button>
         <el-button size="mini" type="text" style="color:#ccc;"><i class="el-icon-download"></i></el-button>
-        <el-button size="mini" type="text" style="color:#ccc;">|</el-button>
-        <el-button size="mini" type="text" style="color:#ccc;"><i class="el-icon-question"></i>帮助</el-button>
       </div>
     </div>
     <el-table 
@@ -77,10 +92,6 @@
       border
       highlight-current-row
       stripe>
-        <el-table-column
-          type="selection"
-          width="55">
-        </el-table-column>
         <el-table-column prop="userName" label="图片" align="center">
           <template slot-scope="{row}">
             <div class="good-info">
@@ -96,18 +107,6 @@
         <el-table-column prop="lastLoginIP" label="采购成本" align="center" show-overflow-tooltip min-width="100"></el-table-column>
         <el-table-column prop="createTime" label="创建时间" align="center" show-overflow-tooltip min-width="100"></el-table-column>
         <el-table-column prop="role" label="状态" align="center" show-overflow-tooltip min-width="80"> </el-table-column>
-        <el-table-column label="操作" fixed="right" align="center" show-overflow-tooltip min-width="120">
-          <template slot-scope="{row, $index}">
-            <el-dropdown split-button type="primary" size="mini">
-              详情
-              <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item @click="edit(row,$index)">编辑</el-dropdown-item>
-                <el-dropdown-item @click="edit(row,$index)">打印标签</el-dropdown-item>
-                <el-dropdown-item @click="edit(row,$index)">删除</el-dropdown-item>
-              </el-dropdown-menu>
-            </el-dropdown>
-          </template>
-        </el-table-column>
     </el-table>
     <div class="page-box">
       <el-pagination
@@ -133,7 +132,8 @@ export default {
         name:'',
         time:[],
         type:'',
-        userName:''
+        userName:'',
+        names:''
       },
       options:[],
       tableData:[

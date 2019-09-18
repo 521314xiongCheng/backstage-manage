@@ -64,8 +64,10 @@
     <div class="page-box">
       <el-pagination
         @current-change="handleCurrentChange"
+        @size-change="handleSizeChange"
         :page-size="pageSize"
-        layout="total, prev, pager, next, jumper"
+        :page-sizes="[20, 50, 100, 200]"
+        layout="total, sizes, prev, pager, next, jumper"
         :total="totalCount"
       ></el-pagination>
     </div>
@@ -153,7 +155,10 @@ export default {
     },
     handleCurrentChange(v){
       this.pageNo=v
-    }
+    },
+    handleSizeChange(v){
+      this.pageSize = v
+    },
   }
 }
 </script>

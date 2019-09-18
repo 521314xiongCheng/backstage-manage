@@ -1,19 +1,12 @@
 <template>
   <div class="user-page">
     <el-form :inline="true" :model="searchForm" ref="searchForm" size="mini">
-      <el-form-item>
-        <el-radio-group v-model="searchForm.type">
-          <el-radio-button label="top">全部</el-radio-button>
-          <el-radio-button label="right">普通商品</el-radio-button>
-          <el-radio-button label="bottom">组合商品</el-radio-button>
-        </el-radio-group>
-      </el-form-item>
-      <el-form-item>
+      <el-form-item style="width:120px;">
         <el-select
           v-model="searchForm.types"
           multiple
           collapse-tags
-          placeholder="全部分类">
+          placeholder="搜索负责人">
           <el-option
             v-for="item in options"
             :key="item.value"
@@ -22,12 +15,12 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item>
+      <el-form-item style="width:120px;">
         <el-select
           v-model="searchForm.types"
           multiple
           collapse-tags
-          placeholder="全部品牌">
+          placeholder="全部站点">
           <el-option
             v-for="item in options"
             :key="item.value"
@@ -36,38 +29,72 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item>
-        <el-select v-model="searchForm.type" placeholder="全部状态" @change="search" style="width:120px">
-          <el-option label="在售" value="inStock"></el-option>
-          <el-option label="停售" value="Discontinued"></el-option>
+      <el-form-item style="width:120px;">
+        <el-select
+          v-model="searchForm.types"
+          multiple
+          collapse-tags
+          placeholder="全部店铺">
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item style="width:120px;">
+        <el-select v-model="searchForm.type" placeholder="选择状态" @change="search">
+          <el-option label="待处理" value="1"></el-option>
+          <el-option label="处理中" value="2"></el-option>
+          <el-option label="已完成" value="3"></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item style="width:120px;">
+        <el-select v-model="searchForm.type" placeholder="选择配对" @change="search">
+          <el-option label="一星" value="1"></el-option>
+          <el-option label="二星" value="2"></el-option>
+          <el-option label="三星" value="3"></el-option>
+          <el-option label="四星" value="4"></el-option>
+          <el-option label="五星" value="5"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-select v-model="searchForm.type" placeholder="请选择" @change="search" style="width:100px">
-          <el-option label="品名" value=""></el-option>
+        <el-select v-model="searchForm.type" placeholder="请选择" @change="search" style="width:80px">
+          <el-option label="评价时间" value="MSKU"></el-option>
+          <el-option label="最后更新时间" value="MSKU"></el-option>
         </el-select>
-        <el-input v-model="searchForm.userName" style="width:180px"></el-input>
+        <el-date-picker
+          style="width:240px"
+          v-model="searchForm.time"
+          type="daterange"
+          range-separator="-"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期">
+        </el-date-picker>
+      </el-form-item>
+      <el-form-item>
+        <el-select v-model="searchForm.type" placeholder="请选择" @change="search" style="width:80px">
+          <el-option label="MSKU" value="MSKU"></el-option>
+        </el-select>
+        <el-input placeholder="请输入内容" style="width:180px;"></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-input placeholder="搜索"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="search">搜索</el-button>
+        <el-button size="mini" type="text" style="color:#ccc;"><i class="el-icon-setting"></i></el-button>
+        <el-button size="mini" type="text" style="color:#ccc;"><i class="el-icon-download"></i></el-button>
       </el-form-item>
     </el-form>
-    <div class="btn-box">
+    <div class="btn-box" v-if="false">
       <div>
-        <el-button size="mini" type="primary">添加商品</el-button>
-        <el-button size="mini" type="primary">添加组合商品</el-button>
-        <el-button size="mini" type="primary">导入商品</el-button>
-        <el-button size="mini" type="primary">导入组合商品</el-button>
-        <el-button size="mini" type="primary">导入更新商品</el-button>
-        <el-button size="mini" type="primary">批量编辑</el-button>
-        <el-button size="mini" type="primary">批量删除</el-button>
-        <el-button size="mini" type="primary">打印标签</el-button>
+        
       </div>
       <div class="btn-box-right">
         <el-button size="mini" type="text" style="color:#ccc;"><i class="el-icon-setting"></i></el-button>
         <el-button size="mini" type="text" style="color:#ccc;"><i class="el-icon-download"></i></el-button>
-        <el-button size="mini" type="text" style="color:#ccc;">|</el-button>
-        <el-button size="mini" type="text" style="color:#ccc;"><i class="el-icon-question"></i>帮助</el-button>
       </div>
     </div>
     <el-table 
@@ -77,10 +104,6 @@
       border
       highlight-current-row
       stripe>
-        <el-table-column
-          type="selection"
-          width="55">
-        </el-table-column>
         <el-table-column prop="userName" label="图片" align="center">
           <template slot-scope="{row}">
             <div class="good-info">
@@ -99,11 +122,11 @@
         <el-table-column label="操作" fixed="right" align="center" show-overflow-tooltip min-width="120">
           <template slot-scope="{row, $index}">
             <el-dropdown split-button type="primary" size="mini">
-              详情
+              解除配对
               <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item @click="edit(row,$index)">编辑</el-dropdown-item>
-                <el-dropdown-item @click="edit(row,$index)">打印标签</el-dropdown-item>
-                <el-dropdown-item @click="edit(row,$index)">删除</el-dropdown-item>
+                <el-dropdown-item @click="del(row,$index)">统计</el-dropdown-item>
+                <el-dropdown-item @click="del(row,$index)">打印标签</el-dropdown-item>
+                <el-dropdown-item @click="del(row,$index)">分配负责人</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
           </template>
@@ -133,7 +156,8 @@ export default {
         name:'',
         time:[],
         type:'',
-        userName:''
+        userName:'',
+        names:''
       },
       options:[],
       tableData:[

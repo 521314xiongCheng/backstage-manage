@@ -21,21 +21,21 @@
           <i class="el-icon-menu"></i>
           <span slot="title">参数设置</span>
         </template>
-        <el-menu-item index="/account/role">汇率管理</el-menu-item>
+        <el-menu-item index="/setting/exchangeRate">汇率管理</el-menu-item>
       </el-submenu>
       <el-submenu index="3">
         <template slot="title">
           <i class="el-icon-document"></i>
           <span slot="title">店铺授权</span>
         </template>
-        <el-menu-item index="/product/productType">店铺授权</el-menu-item>
+        <el-menu-item index="/setting/storeAutho">店铺授权</el-menu-item>
       </el-submenu>
       <el-submenu index="4">
         <template slot="title">
           <i class="el-icon-setting"></i>
           <span slot="title">客户端</span>
         </template>
-        <el-menu-item index="/order/perform">报表记录</el-menu-item>
+        <el-menu-item index="/setting/report">报表记录</el-menu-item>
       </el-submenu>
     </el-menu>
     <i class="el-icon-menu is-collapse" @click="isCollapse = !isCollapse"></i>

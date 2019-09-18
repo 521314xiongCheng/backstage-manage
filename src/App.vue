@@ -8,7 +8,12 @@
         <el-header height="50px">
           <v-header></v-header>
         </el-header>
-        <div v-if="$route.path.includes('setting')||$route.path.includes('commodity')">
+        <div
+          v-if="
+            $route.path.includes('setting') ||
+              $route.path.includes('commodity') ||
+                $route.path.includes('market')
+          ">
           <keep-alive>
             <router-view v-if="$route.meta.keepAlive"></router-view>
           </keep-alive>

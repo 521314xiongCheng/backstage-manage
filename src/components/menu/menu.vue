@@ -11,17 +11,9 @@
             active-text-color="#fff" 
             :unique-opened="true" 
             :collapse="isCollapse">
-            <el-menu-item index="/commodity/commodityManage">
-              <i class="el-icon-location"></i>
-              <span slot="title">商品管理</span>
-            </el-menu-item>
-            <el-menu-item index="/commodity/brandManage">
-              <i class="el-icon-location"></i>
-              <span slot="title">品牌管理</span>
-            </el-menu-item>
-            <el-menu-item index="/commodity/sortManage">
-              <i class="el-icon-location"></i>
-              <span slot="title">分类管理</span>
+            <el-menu-item v-for="item in menuList" :key="item.path" :index="item.path">
+              <i :class="item.icon"></i>
+              <span slot="title">{{item.title}}</span>
             </el-menu-item>
           </el-menu>
         </el-col>
@@ -35,6 +27,14 @@ export default {
     return {
       isCollapse:false
     };
+  },
+  props:{
+    menuList:{
+      type:Array,
+      default() {
+        return []
+      }
+    }
   },
   watch: {},
   created() {
