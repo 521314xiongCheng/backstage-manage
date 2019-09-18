@@ -37,6 +37,29 @@ const router = new Router({
       ]
     },
     {
+      name: 'commodity-index',
+      path: '/commodity',
+      redirect:'/commodity/commodityManage',
+      component: ()=>import('@/pages/commodity/index.vue'),
+      children:[
+        {
+          name: 'commodity-brandManage-index',
+          path: 'brandManage',
+          component: ()=>import('@/pages/commodity/brandManage/index.vue')
+        },
+        {
+          name: 'commodity-commodityManage-index',
+          path: 'commodityManage',
+          component: ()=>import('@/pages/commodity/commodityManage/index.vue')
+        },
+        {
+          name: 'commodity-sortManage-index',
+          path: 'sortManage',
+          component: ()=>import('@/pages/commodity/sortManage/index.vue')
+        },
+      ]
+    },
+    {
       path:'/',
       redirect:'/login'
     }

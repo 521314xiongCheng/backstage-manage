@@ -3,7 +3,7 @@
     <el-container>
       <!-- <el-aside width="140px">
       </el-aside> -->
-      <v-menu-tree></v-menu-tree>
+      <v-menu></v-menu>
       <el-main id="wxloding">
         <keep-alive>
           <router-view v-if="$route.meta.keepAlive"></router-view>
@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import vMenuTree from '@/components/menu/menuTree'
+import vMenu from '@/components/menu/menu'
 export default {
   data(){
     return{
@@ -23,7 +23,7 @@ export default {
     }
   },
   components:{
-    vMenuTree
+    vMenu
   }
 
 }

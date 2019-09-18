@@ -3,7 +3,7 @@
     <el-row class="nav-row" style="width:100%;">
       <el-col :span="20">
         <el-menu 
-          :default-active="$route.path.includes('setting')?'/setting':$route.path" 
+          :default-active="$route.path.includes($route.path.split('/')[0])?`/${$route.path.split('/')[0]}`:$route.path" 
           router 
           text-color="#bababb" 
           background-color="#262626" 
@@ -78,25 +78,16 @@ export default {
           path:'/home'
         },{
           name:'商品',
-          path:'/1'
+          path:'/commodity'
         },{
-          name:'订单',
+          name:'销售',
           path:'/2'
-        },{
-          name:'FBA',
-          path:'/3'
-        },{
-          name:'仓库',
-          path:'/4'
         },{
           name:'物流',
           path:'/5'
         },{
-          name:'邮件',
+          name:'工具',
           path:'/6'
-        },{
-          name:'统计',
-          path:'/7'
         },{
           name:'设置',
           path:'/setting'
