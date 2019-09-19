@@ -118,6 +118,52 @@ const router = new Router({
       ]
     },
     {
+      name:'logistics-index',
+      path:'/logistics',
+      redirect:'/logistics/providers',
+      component: ()=>import('@/pages/logistics/index.vue'),
+      children:[
+        {
+          name:'logistics-providers-index',
+          path:'providers',
+          component: () => import('@/pages/logistics/providers/index.vue')
+        },
+        {
+          name:'logistics-list-index',
+          path:'list',
+          component: () => import('@/pages/logistics/list/index.vue')
+        },
+      ]
+    },
+    {
+      name:'tool-index',
+      path:'/tool',
+      redirect:'/tool/ranking',
+      component: ()=>import('@/pages/tool/index.vue'),
+      children:[
+        {
+          name:'tool-Ranking-index',
+          path:'ranking',
+          component: () => import('@/pages/tool/Ranking/index.vue')
+        },
+        {
+          name:'tool-Selling-index',
+          path:'selling',
+          component: () => import('@/pages/tool/Selling/index.vue')
+        },
+        {
+          name:'tool-Newest-index',
+          path:'newest',
+          component: () => import('@/pages/tool/Newest/index.vue')
+        },
+        {
+          name:'tool-Claim-index',
+          path:'claim',
+          component: () => import('@/pages/tool/Claim/index.vue')
+        },
+      ]
+    },
+    {
       path:'/',
       redirect:'/login'
     }

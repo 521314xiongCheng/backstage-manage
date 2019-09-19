@@ -86,10 +86,10 @@ export default {
           path:'/market'
         },{
           name:'物流',
-          path:'/5'
+          path:'/logistics'
         },{
           name:'工具',
-          path:'/6'
+          path:'/tool'
         },{
           name:'设置',
           path:'/setting'

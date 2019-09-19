@@ -12,7 +12,9 @@
           v-if="
             $route.path.includes('setting') ||
               $route.path.includes('commodity') ||
-                $route.path.includes('market')
+                $route.path.includes('market') ||
+                  $route.path.includes('logistics') ||
+                  $route.path.includes('tool')
           ">
           <keep-alive>
             <router-view v-if="$route.meta.keepAlive"></router-view>
