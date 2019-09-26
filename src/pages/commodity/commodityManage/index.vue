@@ -14,17 +14,30 @@
           multiple
           collapse-tags
           placeholder="全部分类">
+          <el-input v-model="searchType" @input="handleSearch(searchType)" placeholder="搜索内容"></el-input>
+          <div>
+            <el-checkbox v-model="allCategories" @change="handleCheckedAll">全选</el-checkbox>
+          </div>
           <el-option
-            v-for="item in options"
-            :key="item.value"
+            v-show="false"
+            v-for="(item,index) in options"
+            :key="index"
             :label="item.label"
             :value="item.value">
           </el-option>
+          <el-checkbox-group v-model="searchForm.types" @change="handleCheckedTypesChange">
+            <div
+              v-for="(item,index) in showOptions"
+              :key="index">
+              <el-checkbox 
+                :label="item.value">{{item.label}}</el-checkbox>
+            </div>
+          </el-checkbox-group>
         </el-select>
       </el-form-item>
       <el-form-item>
         <el-select
-          v-model="searchForm.types"
+          v-model="searchForm.types2"
           multiple
           collapse-tags
           placeholder="全部品牌">
@@ -123,6 +136,7 @@
 </template>
 
 <script>
+import {oneOf, deleteOneofArray} from '@/utils/index.js'
 export default {
   data(){
     return {
@@ -133,9 +147,32 @@ export default {
         name:'',
         time:[],
         type:'',
+        types:[],
+        types2:[12,11],
         userName:''
       },
-      options:[],
+      searchType:'',
+      allCategories:false,
+      options:[
+        {
+          label:'家用电器-12',
+          value:12,
+          checked:false
+        },{
+          label:'厨具-11',
+          value:11,
+          checked:false
+        },{
+          label:'生活用品-10',
+          value:10,
+          checked:false
+        },{
+          label:'电子器材-16',
+          value:16,
+          checked:false
+        },
+      ],
+      showOptions:[],
       tableData:[
         {
           img:'https://img.alicdn.com/imgextra/i1/693739777/TB2TW6MtwxlpuFjy0FoXXa.lXXa_!!693739777-0-daren.jpg_300x300.jpg',          userName:'demo-andy',
@@ -221,6 +258,9 @@ export default {
       ]
     }
   },
+  mounted(){
+    this.showOptions = this.options
+  },
   methods:{
     search(){
 
@@ -233,6 +273,32 @@ export default {
     },
     handleSizeChange(v){
       this.pageSize = v
+    },
+    handleCheckedAll(v){
+      if(v){
+        this.searchForm.types = this.searchForm.types.concat(this.showOptions.map(i=>{return i.value}))
+      }else{
+        let options = this.searchForm.types.concat(this.showOptions.map(i=>{return i.value}))
+        options.forEach(o=>{
+          if(oneOf(o,this.searchForm.types)){
+            deleteOneofArray(o,this.searchForm.types)
+          }
+        })
+      }
+    },
+    handleCheckedTypesChange(v){
+      console.log(v)
+    },
+    handleSearch(queryString){
+      if(queryString&&queryString!==''){
+        this.showOptions = this.options.filter(this.createFilter(queryString,'label'))
+        // if()
+      }
+    },
+    createFilter(queryString,key) {
+      return (state) => {
+        return (state[key].toLowerCase().indexOf(queryString.toLowerCase()) > -1);
+      };
     },
   }
 }
