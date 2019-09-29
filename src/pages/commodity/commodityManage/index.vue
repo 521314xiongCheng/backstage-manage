@@ -9,45 +9,10 @@
         </el-radio-group>
       </el-form-item>
       <el-form-item>
-        <el-select
-          v-model="searchForm.types"
-          multiple
-          collapse-tags
-          placeholder="全部分类">
-          <el-input v-model="searchType" @input="handleSearch(searchType)" placeholder="搜索内容"></el-input>
-          <div>
-            <el-checkbox v-model="allCategories" @change="handleCheckedAll">全选</el-checkbox>
-          </div>
-          <el-option
-            v-show="false"
-            v-for="(item,index) in options"
-            :key="index"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
-          <el-checkbox-group v-model="searchForm.types" @change="handleCheckedTypesChange">
-            <div
-              v-for="(item,index) in showOptions"
-              :key="index">
-              <el-checkbox 
-                :label="item.value">{{item.label}}</el-checkbox>
-            </div>
-          </el-checkbox-group>
-        </el-select>
+        <v-select :options="sorts" v-model="searchForm.sorts" placeholder="全部分类"></v-select>
       </el-form-item>
       <el-form-item>
-        <el-select
-          v-model="searchForm.types2"
-          multiple
-          collapse-tags
-          placeholder="全部品牌">
-          <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
-        </el-select>
+        <v-select :options="brands" v-model="searchForm.brands" placeholder="全部品牌"></v-select>
       </el-form-item>
       <el-form-item>
         <el-select v-model="searchForm.type" placeholder="全部状态" @change="search" style="width:120px">
@@ -136,8 +101,10 @@
 </template>
 
 <script>
+import vSelect from '@/components/select/index'
 import {oneOf, deleteOneofArray} from '@/utils/index.js'
 export default {
+  components:{vSelect},
   data(){
     return {
       pageSize:1,
@@ -147,32 +114,41 @@ export default {
         name:'',
         time:[],
         type:'',
-        types:[],
-        types2:[12,11],
+        sorts:[],
+        brands:[],
         userName:''
       },
-      searchType:'',
-      allCategories:false,
-      options:[
+      sorts:[
         {
           label:'家用电器-12',
-          value:12,
-          checked:false
+          value:1,
         },{
           label:'厨具-11',
-          value:11,
-          checked:false
+          value:2,
         },{
           label:'生活用品-10',
-          value:10,
-          checked:false
+          value:3,
         },{
           label:'电子器材-16',
-          value:16,
-          checked:false
+          value:4,
         },
       ],
-      showOptions:[],
+      brands:[
+        {
+          label:'UU',
+          value:5,
+        },{
+          label:'YM',
+          value:6,
+        },{
+          label:'ZL',
+          value:7,
+        },{
+          label:'AKO',
+          value:8,
+        },
+      ],
+      
       tableData:[
         {
           img:'https://img.alicdn.com/imgextra/i1/693739777/TB2TW6MtwxlpuFjy0FoXXa.lXXa_!!693739777-0-daren.jpg_300x300.jpg',          userName:'demo-andy',
@@ -259,11 +235,10 @@ export default {
     }
   },
   mounted(){
-    this.showOptions = this.options
   },
   methods:{
     search(){
-
+      console.log(this.searchForm)
     },
     edit(){
 
@@ -273,32 +248,6 @@ export default {
     },
     handleSizeChange(v){
       this.pageSize = v
-    },
-    handleCheckedAll(v){
-      if(v){
-        this.searchForm.types = this.searchForm.types.concat(this.showOptions.map(i=>{return i.value}))
-      }else{
-        let options = this.searchForm.types.concat(this.showOptions.map(i=>{return i.value}))
-        options.forEach(o=>{
-          if(oneOf(o,this.searchForm.types)){
-            deleteOneofArray(o,this.searchForm.types)
-          }
-        })
-      }
-    },
-    handleCheckedTypesChange(v){
-      console.log(v)
-    },
-    handleSearch(queryString){
-      if(queryString&&queryString!==''){
-        this.showOptions = this.options.filter(this.createFilter(queryString,'label'))
-        // if()
-      }
-    },
-    createFilter(queryString,key) {
-      return (state) => {
-        return (state[key].toLowerCase().indexOf(queryString.toLowerCase()) > -1);
-      };
     },
   }
 }
@@ -319,9 +268,10 @@ export default {
   }
   .page-box{
     text-align: right;
-    border: 1px solid #ccc;
+    border: 1px solid #ddd;
     background: #fff;
     margin-top: -1px;
   }
 }
 </style>
+<style lang="less">

@@ -2,32 +2,10 @@
   <div class="user-page">
     <el-form :inline="true" :model="searchForm" ref="searchForm" size="mini">
       <el-form-item style="width:140px;">
-        <el-select
-          v-model="searchForm.types"
-          multiple
-          collapse-tags
-          placeholder="全部站点">
-          <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
-        </el-select>
+        <v-select :options="sites" v-model="searchForm.sites" placeholder="全部站点"></v-select>
       </el-form-item>
       <el-form-item style="width:140px;">
-        <el-select
-          v-model="searchForm.types"
-          multiple
-          collapse-tags
-          placeholder="全部店铺">
-          <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
-        </el-select>
+        <v-select :options="shops" v-model="searchForm.shops" placeholder="全部店铺"></v-select>
       </el-form-item>
       <el-form-item style="width:140px;">
         <el-select
@@ -132,7 +110,9 @@
 </template>
 
 <script>
+import vSelect from '@/components/select/index'
 export default {
+  components:{vSelect},
   data(){
     return {
       pageSize:1,
@@ -143,8 +123,40 @@ export default {
         time:[],
         type:'',
         userName:'',
-        names:''
+        names:'',
+        shops:[],
+        sites:[],
       },
+      shops:[
+        {
+          label:'美国',
+          value:1,
+        },{
+          label:'加拿大',
+          value:2,
+        },{
+          label:'墨西哥',
+          value:3,
+        },{
+          label:'英国',
+          value:4,
+        },
+      ],
+      sites:[
+        {
+          label:'AD 墨西哥',
+          value:1,
+        },{
+          label:'AM-法国',
+          value:2,
+        },{
+          label:'AP-意大利',
+          value:3,
+        },{
+          label:'AsinKing-美国',
+          value:4,
+        },
+      ],
       options:[],
       tableData:[
         {

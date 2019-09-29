@@ -2,46 +2,13 @@
   <div class="user-page">
     <el-form :inline="true" :model="searchForm" ref="searchForm" size="mini">
       <el-form-item style="width:120px;">
-        <el-select
-          v-model="searchForm.types"
-          multiple
-          collapse-tags
-          placeholder="搜索负责人">
-          <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
-        </el-select>
+        <v-select :options="principals" v-model="searchForm.principals" placeholder="搜索负责人"></v-select>
       </el-form-item>
       <el-form-item style="width:120px;">
-        <el-select
-          v-model="searchForm.types"
-          multiple
-          collapse-tags
-          placeholder="全部站点">
-          <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
-        </el-select>
+        <v-select :options="sites" v-model="searchForm.sites" placeholder="全部站点"></v-select>
       </el-form-item>
       <el-form-item style="width:120px;">
-        <el-select
-          v-model="searchForm.types"
-          multiple
-          collapse-tags
-          placeholder="全部店铺">
-          <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
-        </el-select>
+        <v-select :options="shops" v-model="searchForm.shops" placeholder="全部店铺"></v-select>
       </el-form-item>
       <el-form-item style="width:120px;">
         <el-select v-model="searchForm.type" placeholder="选择状态" @change="search">
@@ -146,7 +113,9 @@
 </template>
 
 <script>
+import vSelect from '@/components/select/index'
 export default {
+  components:{vSelect},
   data(){
     return {
       pageSize:1,
@@ -157,9 +126,56 @@ export default {
         time:[],
         type:'',
         userName:'',
-        names:''
+        names:'',
+        principals:[],
+        shops:[],
+        sites:[],
       },
-      options:[],
+      principals:[
+        {
+          label:'张三',
+          value:1,
+        },{
+          label:'李四',
+          value:2,
+        },{
+          label:'王五',
+          value:3,
+        },{
+          label:'赵六',
+          value:4,
+        },
+      ],
+      shops:[
+        {
+          label:'美国',
+          value:1,
+        },{
+          label:'加拿大',
+          value:2,
+        },{
+          label:'墨西哥',
+          value:3,
+        },{
+          label:'英国',
+          value:4,
+        },
+      ],
+      sites:[
+        {
+          label:'AD 墨西哥',
+          value:1,
+        },{
+          label:'AM-法国',
+          value:2,
+        },{
+          label:'AP-意大利',
+          value:3,
+        },{
+          label:'AsinKing-美国',
+          value:4,
+        },
+      ],
       tableData:[
         {
           img:'https://img.alicdn.com/imgextra/i1/693739777/TB2TW6MtwxlpuFjy0FoXXa.lXXa_!!693739777-0-daren.jpg_300x300.jpg',          userName:'demo-andy',

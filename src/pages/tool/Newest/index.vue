@@ -16,18 +16,7 @@
         </el-select>
       </el-form-item>
       <el-form-item style="width:120px;">
-        <el-select
-          v-model="searchForm.types"
-          multiple
-          collapse-tags
-          placeholder="搜索创建人">
-          <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
-        </el-select>
+        <v-select :options="founders" v-model="searchForm.founders" placeholder="搜索创建人"></v-select>
       </el-form-item>
       <el-form-item>
         <el-input placeholder="搜索店铺" style="width:180px;"></el-input>
@@ -90,7 +79,9 @@
 </template>
 
 <script>
+import vSelect from '@/components/select/index'
 export default {
+  components:{vSelect},
   data(){
     return {
       pageSize:1,
@@ -101,8 +92,24 @@ export default {
         time:[],
         type:'',
         userName:'',
-        names:''
+        names:'',
+        founders:[]
       },
+      founders:[
+        {
+          label:'张三',
+          value:1,
+        },{
+          label:'李四',
+          value:2,
+        },{
+          label:'王五',
+          value:3,
+        },{
+          label:'赵六',
+          value:4,
+        },
+      ],
       options:[],
       tableData:[
         {
